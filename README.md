@@ -1,6 +1,6 @@
 # 📝 Todo List Futuriste
 
-Une **application web cyberpunk** qui permet d’ajouter, supprimer et marquer comme faites des tâches, avec un design **néon futuriste**.  
+Une **application web cyberpunk** qui permet d’ajouter, supprimer et marquer comme faites des tâches.  
 Le projet est développé en **HTML, CSS et JavaScript** et utilise le **localStorage** pour garder les tâches même après avoir quitté la page.
 
 ---

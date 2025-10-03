@@ -17,7 +17,7 @@ Le projet est développé en **HTML, CSS et JavaScript** et utilise le **localSt
 
 ## 🖼 Aperçu
 
-![Todo List Futuriste]([https://via.placeholder.com/800x400.png?text=Todo+List+Futuriste](https://jirayaog.github.io/Todo-list-futuriste/)
+![Todo List Futuriste] ([https://via.placeholder.com/800x400.png?text=Todo+List+Futuriste](https://jirayaog.github.io/Todo-list-futuriste/)
 
 ---
 

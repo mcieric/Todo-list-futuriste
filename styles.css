@@ -1,0 +1,118 @@
+/* Fond futuriste */
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at top left, #0d0d0d, #1a1a1a, #000);
+  color: #fff;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+}
+
+/* Titre néon */
+header h1 {
+  font-size: 2.5rem;
+  color: #ff0055;
+  text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 40px #ff0055;
+}
+
+header p {
+  color: #ccc;
+}
+
+.todo-container {
+  margin: 20px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.7);
+}
+
+/* Input + bouton */
+#taskInput {
+  padding: 10px;
+  width: 70%;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  background: #111;
+  color: #fff;
+}
+
+#addTaskBtn {
+  padding: 10px 15px;
+  margin-left: 10px;
+  background: #ff0055;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  text-shadow: 0 0 5px white;
+}
+
+#addTaskBtn:hover {
+  background: #ff3399;
+  box-shadow: 0 0 10px #ff3399, 0 0 20px #ff3399;
+}
+
+/* Liste des tâches */
+#taskList {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#taskList li {
+  background: #222;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.3s;
+}
+
+#taskList li:hover {
+  box-shadow: 0 0 10px #00ffff;
+}
+
+.done {
+  text-decoration: line-through;
+  color: #777;
+}
+
+/* Boutons */
+button.deleteBtn {
+  background: #ff0055;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 5px 8px;
+  transition: 0.3s;
+}
+
+button.deleteBtn:hover {
+  background: #ff3399;
+}
+
+button.completeBtn {
+  background: #00ccff;
+  border: none;
+  border-radius: 6px;
+  color: black;
+  cursor: pointer;
+  padding: 5px 8px;
+  transition: 0.3s;
+}
+
+button.completeBtn:hover {
+  background: #33ffff;
+}

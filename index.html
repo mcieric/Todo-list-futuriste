@@ -9,41 +9,12 @@
 <body>
   <header>
     <h1>📝 Todo List Futuriste</h1>
-    <p>Organise tes tâches par catégorie et priorité</p>
+    <p>Ajoute, supprime et complète tes tâches facilement</p>
   </header>
 
   <main>
-    <div class="task-inputs">
-      <input type="text" id="taskInput" placeholder="Écris ta tâche...">
-
-      <!-- Catégorie -->
-      <select id="taskCategory">
-        <option value="travail">💼 Travail</option>
-        <option value="perso">🏠 Personnel</option>
-        <option value="loisirs">🎮 Loisirs</option>
-      </select>
-
-      <!-- Priorité -->
-      <select id="taskPriority">
-        <option value="haute">🔴 Haute</option>
-        <option value="moyenne">🟠 Moyenne</option>
-        <option value="basse">🟢 Basse</option>
-      </select>
-
-      <button id="addTaskBtn">➕ Ajouter</button>
-    </div>
-
-    <!-- Filtre -->
-    <div class="filter">
-      <label for="filterCategory">Filtrer par catégorie :</label>
-      <select id="filterCategory">
-        <option value="all">Toutes</option>
-        <option value="travail">Travail</option>
-        <option value="perso">Personnel</option>
-        <option value="loisirs">Loisirs</option>
-      </select>
-    </div>
-
+    <input type="text" id="taskInput" placeholder="Écris ta tâche...">
+    <button id="addTaskBtn">➕ Ajouter</button>
     <ul id="taskList"></ul>
   </main>
 
@@ -69,24 +40,17 @@
     const db = firebase.firestore();
 
     const taskInput = document.getElementById("taskInput");
-    const categorySelect = document.getElementById("taskCategory");
-    const prioritySelect = document.getElementById("taskPriority");
     const addTaskBtn = document.getElementById("addTaskBtn");
     const taskList = document.getElementById("taskList");
-    const filterCategory = document.getElementById("filterCategory");
 
     // Ajouter une tâche
     addTaskBtn.onclick = () => {
       const text = taskInput.value.trim();
-      const category = categorySelect.value;
-      const priority = prioritySelect.value;
       if (!text) return;
 
       db.collection("tasks").add({
         text: text,
         done: false,
-        category: category,
-        priority: priority,
         created: firebase.firestore.FieldValue.serverTimestamp()
       });
 
@@ -94,48 +58,31 @@
     };
 
     // Afficher les tâches en temps réel
-    const renderTasks = () => {
-      db.collection("tasks").orderBy("created").onSnapshot(snapshot => {
-        taskList.innerHTML = "";
-        snapshot.forEach(doc => {
-          const task = doc.data();
-          if (filterCategory.value !== "all" && task.category !== filterCategory.value) return;
+    db.collection("tasks").orderBy("created").onSnapshot(snapshot => {
+      taskList.innerHTML = "";
+      snapshot.forEach(doc => {
+        const task = doc.data();
+        const li = document.createElement("li");
 
-          const li = document.createElement("li");
+        const span = document.createElement("span");
+        span.textContent = task.text;
+        if(task.done) span.classList.add("done");
+        li.appendChild(span);
 
-          // Catégorie et priorité
-          const meta = document.createElement("span");
-          meta.textContent = `[${task.category} | ${task.priority}] `;
-          li.appendChild(meta);
+        const completeBtn = document.createElement("button");
+        completeBtn.textContent = "✔";
+        completeBtn.onclick = () => db.collection("tasks").doc(doc.id).update({ done: !task.done });
 
-          // Texte
-          const span = document.createElement("span");
-          span.textContent = task.text;
-          if(task.done) span.classList.add("done");
-          li.appendChild(span);
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑";
+        deleteBtn.onclick = () => db.collection("tasks").doc(doc.id).delete();
 
-          // Boutons
-          const completeBtn = document.createElement("button");
-          completeBtn.textContent = "✔";
-          completeBtn.onclick = () => db.collection("tasks").doc(doc.id).update({ done: !task.done });
+        li.appendChild(completeBtn);
+        li.appendChild(deleteBtn);
 
-          const deleteBtn = document.createElement("button");
-          deleteBtn.textContent = "🗑";
-          deleteBtn.onclick = () => db.collection("tasks").doc(doc.id).delete();
-
-          li.appendChild(completeBtn);
-          li.appendChild(deleteBtn);
-
-          taskList.appendChild(li);
-        });
+        taskList.appendChild(li);
       });
-    };
-
-    renderTasks();
-
-    // Filtre en direct
-    filterCategory.onchange = renderTasks;
-
+    });
   </script>
 </body>
 </html>
